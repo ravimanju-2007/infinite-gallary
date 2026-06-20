@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infinite Scroll Photo Gallery</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="logo" id="logo-btn">PicPulse</div>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search high-res photos..." autocomplete="off">
+    </div>
+  </header>
+
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <nav class="collections-nav" id="collections-nav">
+        </nav>
+    </aside>
+
+    <main class="main-content">
+      <div id="status-message" class="status-message hidden"></div>
+
+      <div class="gallery" id="gallery"></div>
+
+      <div id="skeleton-container" class="gallery hidden">
+        </div>
+
+      <div id="scroll-sentinel"></div>
+    </main>
+  </div>
+
+  <div class="lightbox id="lightbox" role="dialog" aria-hidden="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close lightbox">&times;</button>
+    <button class="lightbox-nav prev" id="lightbox-prev" aria-label="Previous photo">&#10094;</button>
+    <button class="lightbox-nav next" id="lightbox-next" aria-label="Next photo">&#10095;</button>
+    
+    <div class="lightbox-content">
+      <div class="lightbox-media">
+        <img id="lightbox-img" src="" alt="">
+      </div>
+      <div class="lightbox-meta">
+        <div class="meta-left">
+          <a id="lightbox-author-link" href="#" target="_blank" rel="noopener noreferrer">
+            <span id="lightbox-author-name"></span>
+          </a>
+          <span id="lightbox-dimensions" class="meta-sub"></span>
+        </div>
+        <div class="meta-right">
+          <span id="lightbox-likes" class="likes-count"></span>
+          <a id="lightbox-download" href="#" target="_blank" download class="btn-download">Download</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
