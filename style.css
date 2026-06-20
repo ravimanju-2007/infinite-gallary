@@ -1,0 +1,279 @@
+:root {
+  --primary-color: #111;
+  --bg-color: #fff;
+  --text-muted: #767676;
+  --border-color: #e1e1e1;
+  --gutter: 12px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--primary-color);
+  background-color: var(--bg-color);
+  overflow-x: hidden;
+}
+
+/* ── HEADER ── */
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: var(--bg-color);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--border-color);
+  z-index: 100;
+}
+
+.logo {
+  font-weight: 800;
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 24px;
+}
+
+.search-container {
+  flex: 1;
+  max-width: 600px;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: 24px;
+  border: 1px solid var(--border-color);
+  background-color: #eee;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.search-container input:focus {
+  outline: none;
+  background-color: var(--bg-color);
+  border-color: #a1a1a1;
+}
+
+/* ── LAYOUT ── */
+.app-layout {
+  display: flex;
+  margin-top: 64px;
+}
+
+/* Sidebar & Chips Row */
+.sidebar {
+  width: 240px;
+  position: fixed;
+  top: 64px;
+  bottom: 0;
+  left: 0;
+  padding: 24px;
+  border-right: 1px solid var(--border-color);
+  overflow-y: auto;
+}
+
+.collections-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chip {
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  background: none;
+  border: none;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: background 0.2s, color 0.2s;
+}
+
+.chip:hover, .chip.active {
+  background-color: #f5f5f5;
+  color: var(--primary-color);
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 240px;
+  padding: var(--gutter);
+  min-height: calc(100vh - 64px);
+}
+
+/* ── MASONRY GRID (CSS Columns) ── */
+.gallery {
+  column-count: 3;
+  column-gap: calc(var(--gutter) * 2);
+  width: 100%;
+}
+
+.photo-card {
+  break-inside: avoid;
+  margin-bottom: calc(var(--gutter) * 2);
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: #f5f5f5;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Blur-up implementation styling */
+.photo-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.photo-wrapper img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: filter 0.3s ease, transform 0.3s;
+}
+
+.photo-wrapper img.loading {
+  filter: blur(20px);
+  transform: scale(1.05);
+}
+
+/* ── SKELETONS & STATES ── */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading-shimmer 1.5s infinite;
+  border-radius: 8px;
+  margin-bottom: calc(var(--gutter) * 2);
+  break-inside: avoid;
+}
+
+@keyframes loading-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.status-message {
+  text-align: center;
+  padding: 48px 24px;
+  font-size: 18px;
+  color: var(--text-muted);
+}
+
+.btn-retry {
+  margin-top: 12px;
+  padding: 8px 16px;
+  border: 1px solid var(--primary-color);
+  background: transparent;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.hidden { display: none !important; }
+#scroll-sentinel { height: 20px; }
+
+/* ── LIGHTBOX ── */
+.lightbox {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.92);
+  z-index: 1000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox[aria-hidden="false"] { display: flex; }
+
+.lightbox-content {
+  max-width: 85vw;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.lightbox-media {
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  max-height: 70vh;
+}
+
+.lightbox-media img {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+}
+
+.lightbox-meta {
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+}
+
+.meta-sub {
+  display: block;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.lightbox-nav, .lightbox-close {
+  position: absolute;
+  background: none; border: none;
+  color: white; font-size: 32px; cursor: pointer;
+  padding: 16px;
+  user-select: none;
+}
+
+.lightbox-close { top: 16px; right: 16px; }
+.lightbox-prev { left: 16px; }
+.lightbox-next { right: 16px; }
+
+/* ── RESPONSIVE RESPONSIVENESS ── */
+@media (max-width: 900px) {
+  .gallery { column-count: 2; }
+}
+
+@media (max-width: 600px) {
+  .app-layout { flex-direction: column; }
+  .sidebar {
+    position: fixed; top: 64px; left: 0; right: 0; bottom: auto;
+    width: 100%; height: 50px; padding: 4px var(--gutter);
+    border-right: none; border-bottom: 1px solid var(--border-color);
+    background: white; z-index: 90;
+  }
+  .collections-nav {
+    flex-direction: row; overflow-x: auto; white-space: nowrap;
+  }
+  .chip { padding: 6px 12px; font-size: 13px; }
+  .main-content { margin-left: 0; margin-top: 50px; }
+  .gallery { column-count: 1; }
+  .lightbox-nav { display: none; } /* Rely on swipe/buttons less on small viewports */
+}
